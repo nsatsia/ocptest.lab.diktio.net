@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: {{ .Values.global.base_git_url }}
     targetRevision: HEAD
-    path: 'clusters/{{ .Values.global.name }}.{{ .Values.global.domain }}/ztp-gitops-config'
+    path: 'clusters/{{ .Values.global.name }}.{{ .Values.global.domain }}/ztp/gitops-config'
   syncPolicy:
     automated:
       allowEmpty: true
