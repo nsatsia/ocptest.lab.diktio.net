@@ -10,8 +10,9 @@ spec:
       - disk
       - part
     minSize: {{ $.Values.lso.minsize }}
-    deviceMechanicalProperties:
-      - NonRotational
+    #deviceMechanicalProperties:
+    #  - Rotational
+    #  - NonRotational
     # (optional) list of models to allow
     #models:
     #  - "PERC H730P Mini"
@@ -31,7 +32,7 @@ spec:
             {{- range $.Values.nodes }}
               {{- range . }}
                 {{- if eq .lso "true" }}
-              - {{ .name }}.{{ $.Values.global.name }}.{{ $.Values.global.domain }}
+              - {{ .name }}.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}
                 {{- end }}
               {{- end }}
             {{- end }}

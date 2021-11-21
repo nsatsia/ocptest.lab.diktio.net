@@ -15,7 +15,7 @@ spec:
           #  {{- range $.Values.nodes }}
           #    {{- range . }}
           #      {{- if eq .lso "true" }}
-          #    - {{ .name }}.{{ $.Values.global.name }}.{{ $.Values.global.domain }}
+          #    - {{ .name }}.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}
           #      {{- end }}
           #    {{- end }}
           #  {{- end }}

@@ -1,11 +1,11 @@
-{{- range .Values.nodes.masters }}
+{{- range $.Values.nodes.masters }}
 apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
 metadata:
-  name: nmstate-{{ .name }}-{{ $.Values.global.name }}
+  name: nmstate-{{ .name }}-{{ $.Values.cluster.name }}
   namespace: {{ $.Values.global.namespace }}
   labels:
-    cluster-name: {{ $.Values.global.name }}-nmstate
+    cluster-name: {{ $.Values.cluster.name }}-nmstate
 spec:
   config:
     interfaces:

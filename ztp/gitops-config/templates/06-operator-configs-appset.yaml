@@ -2,28 +2,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
- name: {{ .Values.global.name }}-{{ .Values.global.servernamespace }}-configs
- namespace: telco-gitops
+ name: {{ $.Values.cluster.name }}-{{ $.Values.gitops.namespace }}-operator-configs
+ namespace: {{ $.Values.gitops.namespace }}
 spec:
   generators:
     - git:
+        repoURL: '{{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}'
         directories:
-          - path: clusters/{{ .Values.global.name }}.{{ .Values.global.domain }}/config-*
-        repoURL: 'https://github.com/nsatsia/telco-homelabs.git'
+          # - path: {{ $.Values.global.base_git_path }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/operator-configs/*
+          - path: operator-configs/*
         revision: HEAD
   template:
     metadata:
-      name: '01-{{ .Values.global.name }}-{{ "{{" }}path.basename{{ "}}" }}'
-      namespace: telcot-gitops
+      name: '01-{{ $.Values.cluster.name }}-config-{{ "{{" }}path.basename{{ "}}" }}'
+      namespace: {{ $.Values.gitops.namespace }}
     spec:
       destination:
-        namespace: telco-gitops
+        namespace: {{ $.Values.gitops.namespace }}
         server: 'https://kubernetes.default.svc'
       project: default
       source:
-        repoURL: 'https://github.com/nsatsia/telco-homelabs.git'
-        targetRevision: HEAD
+        repoURL: '{{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}'
         path: '{{ "{{" }}path{{ "}}" }}'
+        targetRevision: HEAD
+        helm:
+          valueFiles:
+          - "{{ coalesce $.Values.cluster.values_directory_url $.Values.global.values_directory_url }}/values.yaml"
       syncPolicy:
         automated:
           # Default prune is "false" 

@@ -34,7 +34,7 @@ spec:
               while [ "$URL_READY" != "https" ]; do
                 echo "Waiting for the AI status URL to be ready. ($URL_READY)"
                 sleep $SLEEP
-                URL=$(oc -n {{ .Values.global.namespace }} get agentclusterinstalls.extensions.hive.openshift.io aci-{{ .Values.global.name }} -o=jsonpath="{.status.debugInfo.eventsURL}")
+                URL=$(oc -n {{ $.Values.global.namespace }} get agentclusterinstalls.extensions.hive.openshift.io aci-{{ $.Values.cluster.name }} -o=jsonpath="{.status.debugInfo.eventsURL}")
                 URL_READY=$(echo $URL | awk -F ":" '{print $1}')
               done
               INSTALL_STATUS="Waiting for install to complete"
@@ -47,13 +47,13 @@ spec:
                 then break
                 fi
               done
-              oc get secret -n {{ .Values.global.namespace }} cluster-{{ .Values.global.name }}-admin-kubeconfig -o jsonpath={.data.kubeconfig} | base64 -d > /tmp/kubeconfig
+              oc get secret -n {{ $.Values.global.namespace }} cluster-{{ $.Values.cluster.name }}-admin-kubeconfig -o jsonpath={.data.kubeconfig} | base64 -d > /tmp/kubeconfig
               ARGOPW=$(oc get secret -n telco-gitops telco-gitops-cluster -o go-template='{{ "{{" }}index .data "admin.password"{{ "}}" }}' | base64 -d)
               argocd --username=admin --password=$ARGOPW --insecure --config /tmp/config login telco-gitops-server-telco-gitops.apps.ocpsmc.lab.diktio.net
               echo "#"              
-              if `argocd cluster list --config /tmp/config | egrep -q api.{{ .Values.global.name }}.{{ .Values.global.domain }}`; then
+              if `argocd cluster list --config /tmp/config | egrep -q api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}`; then
                 echo FOUND!  Deleting
-                argocd cluster rm --config /tmp/config  https://api.{{ .Values.global.name }}.{{ .Values.global.domain }}:6443
+                argocd cluster rm --config /tmp/config  https://api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}:6443
               fi
               echo "#"  
               sleep $SLEEP      

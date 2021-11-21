@@ -1,4 +1,4 @@
-{{- range .Values.mirror }}
+{{- range $.Values.mirror }}
 apiVersion: hive.openshift.io/v1
 kind: ClusterImageSet
 metadata:

@@ -2,8 +2,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
-  name: telco-gitops
-  namespace: telco-gitops
+  name: {{ $.Values.gitops.namespace }}
+  namespace: {{ $.Values.gitops.namespace }}
 spec:
   applicationSet:
     resources:

@@ -2,21 +2,21 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: InfraEnv
 metadata:
-  name: infraenv-{{ .Values.global.name }}
+  name: infraenv-{{ $.Values.cluster.name }}
   namespace: assisted-installer
 spec:
   #agentLabelSelector:
   #  matchLabels:
-  #    telco-core: core-{{ .Values.global.name }}
+  #    telco-core: core-{{ $.Values.cluster.name }}
   additionalNTPSources:
     - ntp.iinet.net
   clusterRef:
-    name: cluster-{{ .Values.global.name }}
+    name: cluster-{{ $.Values.cluster.name }}
     namespace: assisted-installer
   ## (optional pub key)
-  sshAuthorizedKey: '{{ .Values.global.ssh_key }}'
+  sshAuthorizedKey: '{{ coalesce $.Values.cluster.ssh_key $.Values.global.ssh_key }}'
   pullSecretRef:
-    name: {{ .Values.global.pull_secret }}
+    name: {{ $.Values.global.pull_secret_name }}
   # proxy:
   #   httpProxy: http://11.11.11.33
   #   httpsProxy: http://22.22.22.55
@@ -25,4 +25,4 @@ spec:
   ## Custom network configuration
   nmStateConfigLabelSelector:
     matchLabels:
-      cluster-name: {{ .Values.global.name }}-nmstate
+      cluster-name: {{ $.Values.cluster.name }}-nmstate

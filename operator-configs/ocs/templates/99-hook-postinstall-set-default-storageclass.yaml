@@ -6,8 +6,8 @@ metadata:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: hook-succeeded
     #helm.sh/hook-weight: "-5"
-  name: postsync-csv-wait-patch-metal3-job
-  namespace: telco-gitops
+  name: postinstall-{{ $.Values.cluster.name }}-wait-default-storageclass-job
+  namespace: {{ $.Values.gitops.namespace }}
 spec:
   template:
     spec:
@@ -17,9 +17,9 @@ spec:
       serviceAccountName: cli-job-sa
       terminationGracePeriodSeconds: 30
       containers:
-        - image: {{ $.Values.global.hook_image }}
+        - image: {{ $.Values.gitops.hook_image }}
           imagePullPolicy: IfNotPresent
-          name: {{ $.Values.global.name }}-default-storageclass-job
+          name: {{ $.Values.cluster.name }}-wait-default-storageclass-job
           env:
             - name: SLEEP
               value: "3"
@@ -28,7 +28,7 @@ spec:
             - -c
             - |
               echo "OCS PostSync Hook"
-              DEFAULT_CLASS={{ $.Values.global.default_storage_class }}
+              DEFAULT_CLASS={{ coalesce $.Values.cluster.default_storage_class $.Values.global.default_storage_class }}
               OCS_CLASS="Pausing $SLEEP seconds..."
               while [ "$OCS_CLASS" != "$DEFAULT_CLASS" ]; do
                 echo "Waiting for the OCS Storage Class to be ready. ($OCS_CLASS)"

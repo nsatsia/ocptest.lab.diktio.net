@@ -21,6 +21,3 @@
 .idea/
 *.tmproj
 .vscode/
-.examples
-.source
-README.md

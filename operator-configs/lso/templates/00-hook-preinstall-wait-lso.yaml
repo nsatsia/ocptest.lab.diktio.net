@@ -6,7 +6,7 @@ metadata:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
     #helm.sh/hook-weight: "-5"
-  name: preinstall-{{ $.Values.global.name }}-wait-lso-job
+  name: preinstall-{{ $.Values.cluster.name }}-wait-lso-job
   namespace: {{ $.Values.gitops.namespace }}
 spec:
   template:
@@ -19,7 +19,7 @@ spec:
       containers:
         - image: {{ $.Values.global.hook_image }}
           imagePullPolicy: IfNotPresent
-          name: {{ $.Values.global.name }}-wait-lso-job
+          name: {{ $.Values.cluster.name }}-wait-lso-job
           env:
             - name: SLEEP
               value: "3"
@@ -38,7 +38,7 @@ spec:
               {{- range $.Values.nodes }}
                 {{- range . }}
                   {{- if eq .lso "true" }}
-              oc label node {{ .name }}.{{ $.Values.global.name }}.{{ $.Values.global.domain }} ran.openshift.io/lso=''
+              oc label node {{ .name }}.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }} ran.openshift.io/lso=''
                   {{- end }}
                 {{- end }}
               {{- end }}
