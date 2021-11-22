@@ -4,7 +4,7 @@ kind: Job
 metadata:
   annotations:
   annotations:
-    helm.sh/hook: pre-install
+    helm.sh/hook: post-install
     helm.sh/hook-delete-policy: hook-succeeded
     #helm.sh/hook-weight: "-5"
   name: preinstall-{{ $.Values.cluster.name }}-wait-argocd-job
@@ -18,7 +18,7 @@ spec:
       serviceAccountName: cli-job-sa
       terminationGracePeriodSeconds: 30
       containers:
-        - image: {{ $.Values.gitops.hook_image }}
+        - image: registry.redhat.io/openshift-gitops-1/argocd-rhel8:v1.2.0
           imagePullPolicy: IfNotPresent
           name: {{ $.Values.cluster.name }}-wait-argocd-job
           env:

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
- name: {{ $.Values.cluster.name }}-{{ $.Values.gitops.namespace }}-blueprint-operators
+ name: {{ $.Values.cluster.name }}-{{ $.Values.gitops.namespace }}-blueprint-configs
  namespace: {{ $.Values.gitops.namespace }}
 spec:
   destination:
@@ -10,13 +10,13 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    repoURL: {{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}
+    repoURL: {{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}.git
     targetRevision: HEAD
-    # path: '{{ $.Values.global.base_git_path }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/bp-operators'
-    path: bp-operators
+    path: bp-configs
     helm:
       valueFiles:
-      - "{{ coalesce $.Values.cluster.values_directory_url $.Values.global.values_directory_url }}/values.yaml"
+      - "{{ $.Values.global.values_directory_url }}/values.yaml"
+      - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
   syncPolicy:
     automated:
       # Default prune is "false" 

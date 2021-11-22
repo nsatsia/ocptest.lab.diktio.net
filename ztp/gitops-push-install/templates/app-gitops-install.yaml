@@ -1,17 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: '01-ztp-gitops-install-{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}'
-  namespace: telco-gitops
+  name: 'ztp-gitops-install-{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}'
+  namespace: {{ $.Values.gitops.namespace }}
 spec:
   destination:
     namespace: openshift-operators
     server: 'https://api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}:6443'
   project: default
   source:
-    repoURL: {{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}
+    repoURL: '{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}.git'
+    path: ztp/gitops-install
     targetRevision: HEAD
-    path: 'clusters/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/ztp/gitops-install'
+    helm:
+      valueFiles:
+      - "{{ $.Values.global.values_directory_url }}/values.yaml"
+      - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
   syncPolicy:
     automated:
       allowEmpty: true

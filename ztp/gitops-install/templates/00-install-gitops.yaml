@@ -13,5 +13,5 @@ spec:
   installPlanApproval: Automatic
   name: openshift-gitops-operator
   # Modify source name of the catalogsource for isolated network deployments
-  source: redhat-operators
+  source: {{ coalesce $.Values.cluster.operator_catalog_name $.Values.global.operator_catalog_name }}
   sourceNamespace: openshift-marketplace

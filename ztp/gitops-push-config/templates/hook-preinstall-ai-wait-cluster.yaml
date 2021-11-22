@@ -17,7 +17,7 @@ spec:
       serviceAccountName: cli-job-sa
       terminationGracePeriodSeconds: 30
       containers:
-        - image: registry.redhat.io/openshift4/ose-cli:latest
+        - image: {{ $.Values.gitops.hook_image }}
           imagePullPolicy: IfNotPresent
           name: {{ $.Values.cluster.name }}-wait-argocd-job
           env:

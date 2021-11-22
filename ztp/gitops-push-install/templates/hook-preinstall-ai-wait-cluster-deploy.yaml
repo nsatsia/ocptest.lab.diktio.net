@@ -6,20 +6,20 @@ metadata:
     helm.sh/hook: pre-install
     helm.sh/hook-delete-policy: hook-succeeded
     #helm.sh/hook-weight: "-5"
-  name: preinstall-{{ $.Values.cluster.name }}-ai-wait-cluster-job
-  namespace: telco-gitops
+  name: preinstall-{{ $.Values.cluster.name }}-ai-wait-cluster-deploy-job
+  namespace: {{ $.Values.gitops.namespace }}
 spec:
   template:
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: OnFailure
-      serviceAccount: cli-job-sa
-      serviceAccountName: cli-job-sa
+      serviceAccount: {{ $.Values.gitops.service_account }}
+      serviceAccountName: {{ $.Values.gitops.service_account_name }}
       terminationGracePeriodSeconds: 30
       containers:
-        - image: registry.redhat.io/openshift4/ose-cli:latest
+        - image:  {{ $.Values.gitops.hook_image }}
           imagePullPolicy: IfNotPresent
-          name: {{ $.Values.cluster.name }}-ai-wait-cluster-config-job
+          name: {{ $.Values.cluster.name }}-ai-wait-cluster-deploy-job
           env:
             - name: SLEEP
               value: "15"

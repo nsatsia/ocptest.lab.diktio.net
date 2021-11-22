@@ -7,7 +7,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: '{{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}'
+        repoURL: {{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}.git
         directories:
           # - path: {{ $.Values.global.base_git_path }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/operator-configs/*
           - path: operator-configs/*
@@ -22,12 +22,13 @@ spec:
         server: 'https://kubernetes.default.svc'
       project: default
       source:
-        repoURL: '{{ coalesce $.Values.cluster.base_git_url $.Values.global.base_git_url }}'
+        repoURL: {{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}.git
         path: '{{ "{{" }}path{{ "}}" }}'
         targetRevision: HEAD
         helm:
           valueFiles:
-          - "{{ coalesce $.Values.cluster.values_directory_url $.Values.global.values_directory_url }}/values.yaml"
+          - "{{ $.Values.global.values_directory_url }}/values.yaml"
+          - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
       syncPolicy:
         automated:
           # Default prune is "false" 
