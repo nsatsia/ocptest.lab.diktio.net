@@ -61,5 +61,5 @@ spec:
               argocd logout --config /tmp/config admin
               rm -f /tmp/kubeconfig /tmp/config 
               echo "All done! Hooray!"
-
+              sleep 300
 
