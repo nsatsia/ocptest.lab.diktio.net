@@ -38,4 +38,12 @@ spec:
               # Add it to the  additionalTrustedCA
               oc patch image.config.openshift.io/cluster --patch '{"spec":{"additionalTrustedCA":{"name":"registry-ca-local"}}}' --type=merge
               #
+               echo "Adding local pull secret to the global one."
+              cd /tmp
+              oc extract secret/pull-secret -n openshift-config --confirm
+              cat .dockerconfigjson | \
+                  jq --compact-output '.auths["{{ $.Values.ai.registry_url }}/{{ $.Values.ai.registry_user }}"] |= . + {"auth":"{{ printf "%s:%s" $.Values.ai.registry_user $.Values.ai.registry_password | b64enc  }}"}' \
+                  > new_dockerconfigjson
+              oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson=new_dockerconfigjson
+              rm -f .dockerconfigjson new_dockerconfigjson
               echo "All done! Hooray!"
