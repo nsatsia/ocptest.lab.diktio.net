@@ -49,7 +49,7 @@ spec:
               done
               oc get secret -n {{ $.Values.global.namespace }} cluster-{{ $.Values.cluster.name }}-admin-kubeconfig -o jsonpath={.data.kubeconfig} | base64 -d > /tmp/kubeconfig
               ARGOPW=$(oc get secret -n telco-gitops telco-gitops-cluster -o go-template='{{ "{{" }}index .data "admin.password"{{ "}}" }}' | base64 -d)
-              argocd --username=admin --password=$ARGOPW --insecure --config /tmp/config login telco-gitops-server-telco-gitops.apps.ocpsmc.lab.diktio.net
+              argocd --username=admin --password=$ARGOPW --insecure --config /tmp/config login telco-gitops-server-telco-gitops.apps.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}
               echo "#"              
               if `argocd cluster list --config /tmp/config | egrep -q api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}`; then
                 echo FOUND!  Deleting
