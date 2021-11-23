@@ -17,7 +17,7 @@ spec:
       serviceAccountName: {{ $.Values.gitops.service_account_name }}
       terminationGracePeriodSeconds: 30
       containers:
-        - image: {{ $.Values.gitops.hook_image }}
+        - image: lab-registry.ocpmgmt.lab.diktio.net/nsatsia/ose-tools-rhel8
           imagePullPolicy: IfNotPresent
           name: {{ $.Values.cluster.name }}-add-registry-ca-wait-job
           env:
