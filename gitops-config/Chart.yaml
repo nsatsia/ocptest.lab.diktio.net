@@ -1,6 +1,6 @@
 ---
 apiVersion: v2
-name: {{ $.Values.cluster.name }}-gitops-config
+name: ocptest-gitops-config-set
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
