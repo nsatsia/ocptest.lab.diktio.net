@@ -2,14 +2,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
- name: {{ $.Values.cluster.name }}-{{ $.Values.gitops.namespace }}-operator-configs
- namespace: {{ $.Values.gitops.namespace }}
+  name: {{ $.Values.cluster.name }}-{{ $.Values.gitops.namespace }}-operator-configs
+  namespace: {{ $.Values.gitops.namespace }}
 spec:
   generators:
     - git:
         repoURL: {{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}.git
         directories:
-          # - path: {{ $.Values.global.base_git_path }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/operator-configs/*
           - path: operator-configs/*
         revision: HEAD
   template:
