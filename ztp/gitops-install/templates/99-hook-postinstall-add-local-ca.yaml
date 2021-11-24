@@ -27,8 +27,7 @@ spec:
             - /bin/bash
             - -c
             - |
-              echo "OCS PostSync Hook"
-              DEFAULT_CLASS="ocs-storagecluster-ceph-rbd"
+              echo "Adding local CA to the global one."
               CONFIG_MAP="Pausing $SLEEP seconds..."
               while [ "$CONFIG_MAP" != "registry-ca-local" ]; do
                 echo "Waiting for the CA ConfigMap to be defined. ($CONFIG_MAP)"
@@ -38,7 +37,7 @@ spec:
               # Add it to the  additionalTrustedCA
               oc patch image.config.openshift.io/cluster --patch '{"spec":{"additionalTrustedCA":{"name":"registry-ca-local"}}}' --type=merge
               #
-               echo "Adding local pull secret to the global one."
+              echo "Adding local pull secret to the global one."
               cd /tmp
               oc extract secret/pull-secret -n openshift-config --confirm
               cat .dockerconfigjson | \
