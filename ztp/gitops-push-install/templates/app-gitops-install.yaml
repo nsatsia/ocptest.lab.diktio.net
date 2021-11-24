@@ -5,7 +5,7 @@ metadata:
   namespace: {{ $.Values.gitops.namespace }}
 spec:
   destination:
-    namespace: openshift-operators
+    namespace: {{ $.Values.gitops.namespace }}
     server: 'https://api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}:6443'
   project: default
   source:
