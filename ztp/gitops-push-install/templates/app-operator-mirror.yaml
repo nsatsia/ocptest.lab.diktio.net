@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'ztp-operator-mirror-{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}'
+  namespace: {{ $.Values.gitops.namespace }}
+spec:
+  destination:
+    namespace: {{ $.Values.gitops.namespace }}
+    server: 'https://api.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}:6443'
+  project: default
+  source:
+    repoURL: '{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.global.name }}.{{ $.Values.global.domain }}.git'
+    path: gitops-push-operator-mirror
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - "{{ $.Values.global.values_directory_url }}/values.yaml"
+      - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 1m
+        factor: 2
+        maxDuration: 3m
+      limit: -1
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
