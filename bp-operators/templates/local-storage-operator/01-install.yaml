@@ -27,5 +27,6 @@ spec:
   installPlanApproval: Automatic
   name: local-storage-operator
   # Modify source name of the catalogsource for isolated network deployments
-  source: redhat-operators
+  source: {{ $.Values.quay.operator_source }}
   sourceNamespace: openshift-marketplace
+
