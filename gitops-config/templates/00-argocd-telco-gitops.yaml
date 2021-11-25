@@ -4,6 +4,10 @@ kind: ArgoCD
 metadata:
   name: {{ $.Values.gitops.namespace }}
   namespace: {{ $.Values.gitops.namespace }}
+  annotations:
+    meta.helm.sh/release-name: gitops-config
+    meta.helm.sh/release-namespace: default
+
 spec:
   applicationSet:
     resources:
