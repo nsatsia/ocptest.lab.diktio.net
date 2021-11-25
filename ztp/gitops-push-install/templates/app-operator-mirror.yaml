@@ -16,19 +16,19 @@ spec:
       valueFiles:
       - "{{ $.Values.global.values_directory_url }}/values.yaml"
       - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
-#  syncPolicy:
-#    automated:
-#      allowEmpty: true
-#      prune: true
-#      selfHeal: true
-#    retry:
-#      backoff:
-#        duration: 1m
-#        factor: 2
-#        maxDuration: 3m
-#      limit: -1
-#    syncOptions:
-#      - Validate=false
-#      - CreateNamespace=true
-#      - PrunePropagationPolicy=foreground
-#      - PruneLast=true
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 1m
+        factor: 2
+        maxDuration: 3m
+      limit: -1
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
