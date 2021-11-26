@@ -79,6 +79,7 @@ spec:
         memory: 256Mi
   resourceExclusions: |
     - apiGroups:
+      - apiregistration.k8s.io/v1beta1
       - tekton.dev
       clusters:
       - '*'
