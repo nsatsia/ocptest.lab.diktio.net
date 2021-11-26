@@ -97,6 +97,11 @@ spec:
       - rbac.authorization.k8s.io/v1beta1
       - scheduling.k8s.io/v1beta1
       - snapshot.storage.k8s.io/v1beta1
+      clusters:
+      - '*'
+      kinds:
+      - '*'
+    - apiGroups:
       - tekton.dev
       clusters:
       - '*'
