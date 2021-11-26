@@ -20,7 +20,7 @@ spec:
   syncPolicy:
     automated:
       allowEmpty: true
-      prune: true
+      # prune: true
       selfHeal: true
     retry:
       backoff:
