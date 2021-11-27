@@ -23,7 +23,9 @@ spec:
       requests:
         cpu: 250m
         memory: 1Gi
-  dex:
+      sharding:
+        enabled: true
+        replocas: 3  dex:
     resources:
       limits:
         cpu: 500m
