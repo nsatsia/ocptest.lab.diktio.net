@@ -25,7 +25,7 @@ spec:
         memory: 1Gi
     sharding:
       enabled: true
-      replocas: 3  dex:
+      replicas: 3  dex:
     resources:
       limits:
         cpu: 500m
