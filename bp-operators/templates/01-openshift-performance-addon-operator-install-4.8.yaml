@@ -4,11 +4,9 @@ kind: Subscription
 metadata:
   name: performance-addon-operator
   namespace: openshift-operators
-  labels:
-    operators.coreos.com/performance-addon-operator.openshift-operators: ''
 spec:
-  channel: 'CHANGEME'
+  channel: "4.8"
   installPlanApproval: Automatic
   name: performance-addon-operator
-  source: {{ $.Values.quay.operator_source }}
+  source:  {{ $.Values.quay.operator_source }}
   sourceNamespace: openshift-marketplace
