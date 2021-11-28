@@ -17,9 +17,9 @@ spec:
       serviceAccountName: {{ $.Values.gitops.service_account_name }}
       terminationGracePeriodSeconds: 30
       containers:
-        - image: {{ $.Values.global.hook_image }}
+        - name: {{ $.Values.cluster.name }}-wait-lso-job
+          image: {{ $.Values.global.hook_image }}
           imagePullPolicy: IfNotPresent
-          name: {{ $.Values.cluster.name }}-wait-lso-job
           env:
             - name: SLEEP
               value: "3"
