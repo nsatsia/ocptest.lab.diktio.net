@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: {{ $.Values.cluster.name }}-wait-lso-job
-          image: {{ $.Values.global.hook_image | quote }}
+          image: {{ $.Values.gitops.hook_image | quote }}
           imagePullPolicy: IfNotPresent
           env:
             - name: SLEEP
