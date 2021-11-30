@@ -54,18 +54,18 @@ nodes:
     bmc_password: Redhat01
     bmc_address: http://192.19.130.14:8080/redfish/v1/Systems/e3cd938d-32c7-4fb1-831a-43ff67f102d0
 
-  workers:
-  - name: "worker1"
-    role: worker
-    lso: "true"
-    ocs: "false"
-    bond0_IP: "192.19.129.26"
-    int1_name: "enp1s0"
-    int1_mac: "52:54:00:46:8a:bf"
-    int2_name: "enp2s0"
-    int2_mac: "52:54:01:46:8a:bf"
-    int3_name: "enp3s0"
-    int3_mac: "52:54:02:46:8a:bf"
-    bmc_username: ADMIN
-    bmc_password: Redhat01
-    bmc_address: http://192.19.130.11:8080/redfish/v1/Systems/e7619f50-b9bc-45a8-bf64-641c398fdc75
+#  workers:
+#  - name: "worker1"
+#    role: worker
+#    lso: "true"
+#    ocs: "false"
+#    bond0_IP: "192.19.129.26"
+#    int1_name: "enp1s0"
+#    int1_mac: "52:54:00:46:8a:bf"
+#    int2_name: "enp2s0"
+#    int2_mac: "52:54:01:46:8a:bf"
+#    int3_name: "enp3s0"
+#    int3_mac: "52:54:02:46:8a:bf"
+#    bmc_username: ADMIN
+#    bmc_password: Redhat01
+#    bmc_address: http://192.19.130.11:8080/redfish/v1/Systems/e7619f50-b9bc-45a8-bf64-641c398fdc75
