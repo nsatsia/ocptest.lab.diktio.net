@@ -9,13 +9,3 @@ spec:
       - matchExpressions:
           - key: ran.openshift.io/lso
             operator: Exists
-          #- key: kubernetes.io/hostname
-          #  operator: In
-          #  values:
-          #  {{- range $.Values.nodes }}
-          #    {{- range . }}
-          #      {{- if eq .lso "true" }}
-          #    - {{ .name }}.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}
-          #      {{- end }}
-          #    {{- end }}
-          #  {{- end }}

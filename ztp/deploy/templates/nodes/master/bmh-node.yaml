@@ -9,7 +9,7 @@ metadata:
     infraenvs.agent-install.openshift.io: "infraenv-{{ $.Values.cluster.name }}"
   annotations:
     bmac.agent-install.openshift.io/role: {{ .role | default "worker" }}
-    bmac.agent-install.openshift.io/hostname: "{{ .name }}.{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}"
+    bmac.agent-install.openshift.io/hostname: "{{ .name }}"
     inspect.metal3.io: disabled
     # bmac.agent-install.openshift.io/installer-args: '["-n"]' 
 spec:
