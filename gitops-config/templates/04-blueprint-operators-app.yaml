@@ -15,7 +15,7 @@ spec:
     path: bp-operators
     helm:
       valueFiles:
-      - "{{ $.Values.global.values_directory_url }}/values.yaml"
+      - "{{ $.Values.global.values_global_url }}/values.yaml"
       - "{{ $.Values.global.values_cluster_prefix_url }}/{{ $.Values.cluster.name }}.{{ $.Values.global.domain }}/raw/main/values.yaml"
   syncPolicy:
     automated:
