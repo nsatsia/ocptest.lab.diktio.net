@@ -63,7 +63,7 @@ spec:
     routes:
       config:
         - destination: 0.0.0.0/0
-          next-hop-address: {{ $.Values.global.default_router }}
+          next-hop-address: {{ $.Values.cluster.default_router }}
           next-hop-interface: bond0
   interfaces:
     - name: {{ .int1_name | quote }}

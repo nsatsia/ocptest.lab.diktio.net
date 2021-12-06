@@ -8,8 +8,8 @@ metadata:
   annotations:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
 spec:
-  apiVIP: '{{ $.Values.global.api_vip }}'
-  ingressVIP: '{{ $.Values.global.ingress_vip }}'
+  apiVIP: '{{ $.Values.cluster.api_vip }}'
+  ingressVIP: '{{ $.Values.cluster.ingress_vip }}'
   clusterDeploymentRef:
     name: cluster-{{ $.Values.cluster.name }}
   imageSetRef:
@@ -18,10 +18,10 @@ spec:
 #    name: cm-overrides-ran-skylark-cars-lab
   networking:
     clusterNetwork:
-      - cidr: {{ $.Values.global.clusternetwork | quote }}
+      - cidr: {{ $.Values.cluster.clusternetwork | quote }}
         hostPrefix: 23
     serviceNetwork:
-      -  {{ $.Values.global.servicenetwork | quote }}
+      -  {{ $.Values.cluster.servicenetwork | quote }}
   provisionRequirements:
     controlPlaneAgents: 3
 #    workerAgents: 2
